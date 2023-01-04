@@ -23,8 +23,8 @@ class Student extends Customer {
 	}
 }
 
-let firstCustomer = new Customer('Alice');
-let newMessage: string = firstCustomer.greet();
+//let firstCustomer = new Customer('Alice');
+//let newMessage: string = firstCustomer.greet();
 
 let firstStudent = new Student('Micheal', 'Harvard');
 let studentMessage: string = firstStudent.greet();

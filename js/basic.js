@@ -16,8 +16,8 @@ class Student extends Customer {
         return `Hello, My name is ${this.name}. I'm a student at ${this.school}.`;
     }
 }
-let firstCustomer = new Customer('Alice');
-let newMessage = firstCustomer.greet();
+//let firstCustomer = new Customer('Alice');
+//let newMessage: string = firstCustomer.greet();
 let firstStudent = new Student('Micheal', 'Harvard');
 let studentMessage = firstStudent.greet();
 let webHeading = document.querySelector('h1');
