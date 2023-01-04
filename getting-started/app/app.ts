@@ -1,5 +1,5 @@
 function startGame() {
-	let playerName: string;
+	let playerName: string = 'Johnny';
 	logPlayer(playerName);
 }
 
