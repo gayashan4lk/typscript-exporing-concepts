@@ -2,6 +2,7 @@ function startGame() {
 	let playerName: string | undefined = getInputValue('playername');
 	logPlayer(playerName);
 	postScore(25, playerName);
+	logMessage("hi, i'am an arrow function.");
 }
 
 function logPlayer(name?: string) {
@@ -29,5 +30,7 @@ function postScore(
 
 	scoreElement!.innerText = `${playerName} : ${score}`;
 }
+
+const logMessage = (message: string) => console.log(message);
 
 document.getElementById('startGame')!.addEventListener('click', startGame);
