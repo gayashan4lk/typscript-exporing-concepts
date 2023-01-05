@@ -1,3 +1,7 @@
+/// <reference path="Player.ts" />
+/// <reference path="IPerson.ts" />
+/// <reference path="IResult.ts" />
+
 function startGame() {
 	let playerName: string | undefined = getInputValue('playername');
 	logPlayer(playerName);
@@ -83,5 +87,9 @@ let player: IPerson = {
 
 console.log(myResult);
 console.log(player);
+
+let firstPlayer: Player = new Player('Lanister', 98);
+console.log(firstPlayer);
+console.log(firstPlayer.formatName());
 
 document.getElementById('startGame')!.addEventListener('click', startGame);
