@@ -46,4 +46,42 @@ function logError(error: string): void {
 	console.error(error);
 }
 
+interface Employee {
+	name: string;
+	title: string;
+}
+
+let developer: Employee = {
+	name: 'Micheal',
+	title: 'Senior Developer',
+};
+
+let manager = {
+	name: 'Paul',
+	title: 'Senior manager',
+	experience: 10,
+};
+
+let newManager: Employee = manager;
+
+console.log(developer);
+console.log(newManager);
+
+let myResult: IResult = {
+	playerName: 'Daniel',
+	score: 99,
+	problemCount: 5,
+	factor: 1,
+};
+
+let player: IPerson = {
+	name: 'Daniel',
+	formatName: function (): string {
+		return 'Dan';
+	},
+};
+
+console.log(myResult);
+console.log(player);
+
 document.getElementById('startGame')!.addEventListener('click', startGame);
