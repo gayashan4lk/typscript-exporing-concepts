@@ -1,6 +1,6 @@
-import { UiEngine } from './modules';
-import { Game } from './modules';
-import { Utility } from './modules';
+import { UiEngine } from './multimath-library';
+import { Game } from './multimath-library';
+import { Utility } from './multimath-library';
 
 let uiEngine: UiEngine = new UiEngine();
 let game: Game;
