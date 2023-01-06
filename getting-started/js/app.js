@@ -1,73 +1,38 @@
 "use strict";
-class Player {
-    formatName() {
-        return this.name.toUpperCase();
+Object.defineProperty(exports, "__esModule", { value: true });
+const modules_1 = require("./modules");
+const modules_2 = require("./modules");
+const modules_3 = require("./modules");
+let uiEngine = new modules_1.UiEngine();
+let game;
+document.getElementById('button_startGame').addEventListener('click', () => {
+    const playerName = modules_3.Utility.getValue('playername');
+    const factor = Number(modules_3.Utility.getValue('factor'));
+    const problemCount = Number(modules_3.Utility.getValue('problemCount'));
+    game = new modules_2.Game(playerName, factor, problemCount);
+    modules_3.Utility.logger(game);
+    displayGame(problemCount, factor);
+    document.getElementById('button_calculateScore').removeAttribute('disabled');
+});
+document
+    .getElementById('button_calculateScore')
+    .addEventListener('click', () => {
+    let score = 0;
+    for (let i = 1; i <= game.problemCount; i++) {
+        let answer = Number(modules_3.Utility.getValue(`answer_${i}`));
+        if (answer === game.factor * i) {
+            score++;
+        }
     }
-    constructor(name, highScore) {
-        this.name = name;
-        this.highScore = highScore;
-    }
+    game.setPlayerScore(score);
+    modules_3.Utility.logger(game);
+    document.getElementById('postedScores').innerHTML = `${game.getPlayerName()} : ${game.getPlayerScore()} / ${game.problemCount}`;
+    document
+        .getElementById('button_calculateScore')
+        .setAttribute('disabled', 'true');
+});
+function displayGame(problemCount, factor) {
+    let templateString = uiEngine.createGameUi(problemCount, factor);
+    document.getElementById('game').innerHTML = templateString;
 }
-function startGame() {
-    let playerName = getInputValue('playername');
-    logPlayer(playerName);
-    postScore(25, playerName);
-    postScore(-3, playerName);
-}
-function logPlayer(name) {
-    console.log(`New game starting for player: ${name}`);
-}
-function getInputValue(elementId) {
-    const inputElement = document.getElementById(elementId);
-    if (inputElement.value == '') {
-        return undefined;
-    }
-    return inputElement.value;
-}
-function postScore(score, playerName = 'Anonymous player') {
-    const scoreElement = document.getElementById('postedScores');
-    scoreElement.innerText = `${playerName} : ${score}`;
-    let logger;
-    if (score < 0) {
-        logger = logError;
-    }
-    else {
-        logger = logMessage;
-    }
-    logger(`Score: ${score}`);
-}
-const logMessage = (message) => console.log(message);
-function logError(error) {
-    console.error(error);
-}
-let developer = {
-    name: 'Micheal',
-    title: 'Senior Developer',
-};
-let manager = {
-    name: 'Paul',
-    title: 'Senior manager',
-    experience: 10,
-};
-let newManager = manager;
-console.log(developer);
-console.log(newManager);
-let myResult = {
-    playerName: 'Daniel',
-    score: 99,
-    problemCount: 5,
-    factor: 1,
-};
-let player = {
-    name: 'Daniel',
-    formatName: function () {
-        return 'Dan';
-    },
-};
-console.log(myResult);
-console.log(player);
-let firstPlayer = new Player('Lanister', 98);
-console.log(firstPlayer);
-console.log(firstPlayer.formatName());
-document.getElementById('startGame').addEventListener('click', startGame);
 //# sourceMappingURL=app.js.map
