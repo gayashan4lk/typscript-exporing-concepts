@@ -1,73 +1,88 @@
 "use strict";
+class UiEngine {
+    createGameUi(problemCount, factor) {
+        let templateString = '';
+        for (let i = 1; i <= problemCount; i++) {
+            templateString += `<div class="form-group">
+      <label for="answer_${i}" class="col-sm-2 control-label">${factor} X ${i}</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" id="answer_${i}" size="5" />
+      </div>
+    </div>`;
+        }
+        return templateString;
+    }
+}
+class Utility {
+    static getInputValue(elementId) {
+        const inputElement = document.getElementById(elementId);
+        return inputElement.value;
+    }
+}
 class Player {
+    constructor(name) {
+        this.name = name;
+    }
     formatName() {
         return this.name.toUpperCase();
     }
-    constructor(name, highScore) {
-        this.name = name;
-        this.highScore = highScore;
+}
+class ScoreBoard {
+    constructor() {
+        this.score = 0;
+        this.highScore = 0;
     }
 }
-function startGame() {
-    let playerName = getInputValue('playername');
-    logPlayer(playerName);
-    postScore(25, playerName);
-    postScore(-3, playerName);
-}
-function logPlayer(name) {
-    console.log(`New game starting for player: ${name}`);
-}
-function getInputValue(elementId) {
-    const inputElement = document.getElementById(elementId);
-    if (inputElement.value == '') {
-        return undefined;
+class Game {
+    constructor(playerName, factor, problemCount) {
+        if (playerName == null || playerName.trim() === '') {
+            this.player = new Player('Anonymous');
+        }
+        else {
+            this.player = new Player(playerName);
+        }
+        this.scoreBoard = new ScoreBoard();
+        this.factor = factor;
+        this.problemCount = problemCount;
     }
-    return inputElement.value;
-}
-function postScore(score, playerName = 'Anonymous player') {
-    const scoreElement = document.getElementById('postedScores');
-    scoreElement.innerText = `${playerName} : ${score}`;
-    let logger;
-    if (score < 0) {
-        logger = logError;
+    getPlayerName() {
+        return this.player.name;
     }
-    else {
-        logger = logMessage;
+    setPlayerScore(score) {
+        this.scoreBoard.score = score;
     }
-    logger(`Score: ${score}`);
+    getPlayerScore() {
+        return this.scoreBoard.score;
+    }
 }
-const logMessage = (message) => console.log(message);
-function logError(error) {
-    console.error(error);
+let uiEngine = new UiEngine();
+let game;
+document.getElementById('button_startGame').addEventListener('click', () => {
+    const playerName = Utility.getInputValue('playername');
+    const factor = Number(Utility.getInputValue('factor'));
+    const problemCount = Number(Utility.getInputValue('problemCount'));
+    game = new Game(playerName, factor, problemCount);
+    displayGame(problemCount, factor);
+    document.getElementById('button_calculateScore').removeAttribute('disabled');
+});
+document
+    .getElementById('button_calculateScore')
+    .addEventListener('click', () => {
+    let score = 0;
+    for (let i = 1; i <= game.problemCount; i++) {
+        let answer = Number(Utility.getInputValue(`answer_${i}`));
+        if (answer === game.factor * i) {
+            score++;
+        }
+    }
+    game.setPlayerScore(score);
+    document.getElementById('postedScores').innerHTML = `${game.getPlayerName()} : ${game.getPlayerScore()} / ${game.problemCount}`;
+    document
+        .getElementById('button_calculateScore')
+        .setAttribute('disabled', 'true');
+});
+function displayGame(problemCount, factor) {
+    let templateString = uiEngine.createGameUi(problemCount, factor);
+    document.getElementById('game').innerHTML = templateString;
 }
-let developer = {
-    name: 'Micheal',
-    title: 'Senior Developer',
-};
-let manager = {
-    name: 'Paul',
-    title: 'Senior manager',
-    experience: 10,
-};
-let newManager = manager;
-console.log(developer);
-console.log(newManager);
-let myResult = {
-    playerName: 'Daniel',
-    score: 99,
-    problemCount: 5,
-    factor: 1,
-};
-let player = {
-    name: 'Daniel',
-    formatName: function () {
-        return 'Dan';
-    },
-};
-console.log(myResult);
-console.log(player);
-let firstPlayer = new Player('Lanister', 98);
-console.log(firstPlayer);
-console.log(firstPlayer.formatName());
-document.getElementById('startGame').addEventListener('click', startGame);
 //# sourceMappingURL=app.js.map

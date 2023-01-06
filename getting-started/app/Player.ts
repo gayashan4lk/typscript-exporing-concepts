@@ -1,14 +1,13 @@
-class Player implements IPerson {
+class Player {
 	name: string;
-	age?: number | undefined;
-	highScore: number;
+	age?: number;
+	highScore?: number;
+
+	constructor(name: string) {
+		this.name = name;
+	}
 
 	formatName() {
 		return this.name.toUpperCase();
-	}
-
-	constructor(name: string, highScore: number) {
-		this.name = name;
-		this.highScore = highScore;
 	}
 }
