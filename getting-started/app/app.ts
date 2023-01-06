@@ -1,16 +1,17 @@
-/// <reference path="UiEngine.ts" />
-/// <reference path="Utility.ts" />
-/// <reference path="Game.ts" />
+import { UiEngine } from './UiEngine';
+import { Game } from './Game';
+import { getValue, logger } from './Utility';
 
 let uiEngine: UiEngine = new UiEngine();
 let game: Game;
 
 document.getElementById('button_startGame')!.addEventListener('click', () => {
-	const playerName = Utility.getInputValue('playername');
-	const factor = Number(Utility.getInputValue('factor'));
-	const problemCount = Number(Utility.getInputValue('problemCount'));
+	const playerName = getValue('playername');
+	const factor = Number(getValue('factor'));
+	const problemCount = Number(getValue('problemCount'));
 
 	game = new Game(playerName, factor, problemCount);
+	logger(game);
 
 	displayGame(problemCount, factor);
 
@@ -24,7 +25,7 @@ document
 		// calculate score
 		let score: number = 0;
 		for (let i = 1; i <= game.problemCount; i++) {
-			let answer: number = Number(Utility.getInputValue(`answer_${i}`));
+			let answer: number = Number(getValue(`answer_${i}`));
 			if (answer === game.factor * i) {
 				score++;
 			}
@@ -32,6 +33,8 @@ document
 
 		// set score
 		game.setPlayerScore(score);
+
+		logger(game);
 
 		// display scoreboard
 		document.getElementById(

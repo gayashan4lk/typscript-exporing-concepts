@@ -1,4 +1,4 @@
-class ScoreBoard {
+export class ScoreBoard {
 	score: number;
 	highScore: number;
 

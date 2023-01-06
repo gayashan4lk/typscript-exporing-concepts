@@ -1,4 +1,4 @@
-class UiEngine {
+export class UiEngine {
 	createGameUi(problemCount: number, factor: number): string {
 		let templateString: string = '';
 

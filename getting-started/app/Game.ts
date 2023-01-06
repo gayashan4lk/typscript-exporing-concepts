@@ -1,7 +1,7 @@
-/// <reference path="Player.ts" />
-/// <reference path="ScoreBoard.ts" />
+import { Player } from './Player';
+import { ScoreBoard } from './ScoreBoard';
 
-class Game {
+export class Game {
 	private player: Player;
 	private scoreBoard: ScoreBoard;
 	factor: number;
